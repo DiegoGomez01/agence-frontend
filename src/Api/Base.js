@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import env from '../.env';
+import env from '../.env.js';
 
 class Base {
     constructor() {
