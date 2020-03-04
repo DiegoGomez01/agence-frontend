@@ -3,12 +3,13 @@ frontend:
   phases:
     preBuild:
       commands:
-        - nvm use v12.11.1
+        - nvm install 12.14.1
+        - nvm use v12.14.1
         - npm install
         - touch ./src/.env.js
     build:
       commands:
-        - nvm use v12.11.1
+        - nvm use v12.14.1
         - node -v
         - echo "export default $OBJECT_ENV;" > ./src/.env.js 
         - npm run build
