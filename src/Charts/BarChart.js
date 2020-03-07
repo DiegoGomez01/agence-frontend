@@ -29,7 +29,7 @@ class BarChart extends Component {
             }
         } else {
             for(let i = 0; i < receitaLiquita.length; i++) {
-                data[i+1].push(receitaLiquita[i].total || 0);
+                data[i+1].push(receitaLiquita[i].total);
             }
         }
     }
