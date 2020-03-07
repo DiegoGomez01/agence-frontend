@@ -2,6 +2,7 @@ import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import { Tab } from 'semantic-ui-react'
 import Pie from '../Charts/Pie';
+import BarChart from '../Charts/BarChart';
 import Table from '../Tables/Tables';
 import TbodyConsultor from '../Tables/TbodyConsultor';
 
@@ -30,7 +31,9 @@ const panes = [
                 <Col sm={5}>
                     <Pie report={props.report} />
                 </Col>
-                <Col sm={7}>sm=4</Col>
+                <Col sm={7}>
+                    <BarChart report={props.report} />
+                </Col>
             </Row>
         </Tab.Pane>,
     },

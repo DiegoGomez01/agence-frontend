@@ -4,22 +4,20 @@ import PropTypes from 'prop-types';
 
 class Pie extends Component {
     render() {
+        console.log(this.props.report);
+        const data = [['consultor', 'Total Receita Liquida']];
+        for(let i = 0; i < this.props.report.length; i++) {
+            data.push([this.props.report[i].name, this.props.report[i].report.sumReceitaLiquida]);
+        }
         return (
             <div className="d-flex justify-content-center">
                 <Chart
                     height={'300px'}
                     chartType="PieChart"
                     loader={<div>Loading Chart</div>}
-                    data={[
-                        ['Task', 'Hours per Day'],
-                        ['Work', 11],
-                        ['Eat', 2],
-                        ['Commute', 2],
-                        ['Watch TV', 2],
-                        ['Sleep', 7],
-                    ]}
+                    data={data}
                     options={{
-                        title: 'My Daily Activities',
+                        title: 'Receita Liquida',
                         is3D: true,
                     }}
                     rootProps={{ 'data-testid': '2' }}
@@ -30,7 +28,7 @@ class Pie extends Component {
 }
 
 Pie.propTypes = {
-
+    report: PropTypes.array.isRequired
 };
 
 export default Pie;
