@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import App from './App';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 const routing = (
     <Router>

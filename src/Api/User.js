@@ -9,10 +9,5 @@ class Test extends Base {
     async getReportConsultors(user, start_date, end_date) {
         return this.fetch(`/consultants/report/${user}/${start_date}/${end_date}`);
     }
-
-    // async post(data) {
-    //     const request = this.request('POST', data);
-    //     return this.fetch('/', request);
-    // }
 }
 export default (new Test());

@@ -4,44 +4,22 @@ import { Table } from 'react-bootstrap'
 
 class Tables extends Component {
     render() {
+        const Tbody = this.props.tbody;
         return (
             <div>
-                <Table striped bordered hover responsive style={{textAlign: 'center'}}>
+                <Table hover responsive style={{ textAlign: 'center' }}>
                     <thead>
-                        <tr>
-                            <th colSpan="5">NOMBRE USUARIO</th>
-                        </tr>
-                        <tr>
-                            <th>Periodo</th>
-                            <th>Receita Líquida</th>
-                            <th>Custo Fixo</th>
-                            <th>Comissão</th>
-                            <th>Lucro</th>
+                        <tr style={{backgroundColor: 'rgba(0,0,0,.05)'}}>
+                            {
+                                this.props.headers.map((header, index) => (
+                                    <th key={index}>{header}</th>
+                                ))
+                            }
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                        </tr>
-                        <tr>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                        </tr>
-                        <tr>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                            <td>Table cell</td>
-                        </tr>
-                    </tbody>
+                        <Tbody
+                            data={this.props.data}
+                        />
                 </Table>
             </div>
         );
@@ -49,7 +27,7 @@ class Tables extends Component {
 }
 
 Tables.propTypes = {
-
+    headers: PropTypes.array.isRequired
 };
 
 export default Tables;
