@@ -1,5 +1,5 @@
-import Test from './Test';
+import User from './User';
 
 export {
-    Test,
+    User,
 };
