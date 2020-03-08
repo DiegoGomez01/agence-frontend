@@ -32,13 +32,13 @@ const panes = [
                     <Pie report={props.report} />
                 </Col>
                 <Col sm={7}>
-                    <BarChart report={props.report} />
+                    <BarChart report={props.report} selectionrange={props.selectionrange}/>
                 </Col>
             </Row>
         </Tab.Pane>,
     },
 ]
 
-const TabExamplePointing = (props) => <Tab menu={{ pointing: true }} panes={panes} report={props.report} />
+const TabExamplePointing = (props) => <Tab menu={{ pointing: true }} panes={panes} report={props.report} selectionrange={props.selectionrange}/>
 
 export default TabExamplePointing

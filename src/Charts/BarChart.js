@@ -9,10 +9,13 @@ class BarChart extends Component {
     custoFixoMedio = 0;
 
     getData() {
-        let iMonth = 4;
-        let eMonth = 8;
-        let iYear = 2007;
-        let eYear = 2007;
+        let start_date = new Date(this.props.selectionrange.startDate);
+        let end_date = new Date(this.props.selectionrange.endDate);
+
+        let iMonth = start_date.getMonth() + 1;
+        let eMonth = end_date.getMonth() + 1;
+        let iYear = start_date.getFullYear();
+        let eYear = end_date.getFullYear();;
 
         const reports = this.props.report;
 
@@ -45,7 +48,7 @@ class BarChart extends Component {
             <div className="d-flex justify-content-center">
                 <Chart
                     height={'300px'}
-                    width={'70%'}
+                    width={'400px'}
                     chartType="ComboChart"
                     loader={<div>Loading Chart</div>}
                     data={data}

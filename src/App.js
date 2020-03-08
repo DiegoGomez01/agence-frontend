@@ -109,7 +109,7 @@ class App extends Component {
         </Row>
         <Row style={{ margin: '0% 2% 2% 2%' }}>
           <Col sm={12} style={{ textAlign: 'center' }}>
-            <ViewData report={this.state.report} />
+            <ViewData report={this.state.report} selectionrange={this.state.selectionRange}/>
           </Col>
         </Row>
       </div>
