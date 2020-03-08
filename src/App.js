@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Menu from './Menu/Menu';
-import { Tab, Tabs, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { DateRange } from 'react-date-range';
 import Users from './Users/Users';
 import ViewData from './ViewData/index';
@@ -29,7 +29,6 @@ class App extends Component {
 
   async componentDidMount() {
     const users = await User.getConsultors();
-    console.log(users);
     this.setState({
       users: {
         userSelected: [],
@@ -39,7 +38,6 @@ class App extends Component {
   }
 
   handleSelect(ranges) {
-    console.log(ranges);
     this.setState({
       selectionRange: {
         startDate: ranges.selection.startDate,
@@ -57,10 +55,10 @@ class App extends Component {
       this.state.users.userSelected.splice(stateValues, 1);
     }
     this.setState({
-        users: {
-          ...this.state.users,
-          userSelected: this.state.users.userSelected
-        }
+      users: {
+        ...this.state.users,
+        userSelected: this.state.users.userSelected
+      }
     });
   }
 
@@ -74,13 +72,13 @@ class App extends Component {
   }
 
   async getReport() {
-    let start_date =new Date(this.state.selectionRange.startDate);
+    let start_date = new Date(this.state.selectionRange.startDate);
     start_date = `${start_date.getFullYear()}-${start_date.getMonth() + 1}-${start_date.getDay() + 1}`;
-    let end_date =new Date(this.state.selectionRange.endDate);
+    let end_date = new Date(this.state.selectionRange.endDate);
     end_date = `${end_date.getFullYear()}-${end_date.getMonth() + 1}-${end_date.getDay() + 1}`
 
     const reports = [];
-    for(var i = 0; i < this.state.users.userSelected.length; i++) {
+    for (var i = 0; i < this.state.users.userSelected.length; i++) {
       const user = this.state.users.userSelected[i];
       let report = await User.getReportConsultors(user.id, start_date, end_date);
       reports.push({
@@ -89,7 +87,6 @@ class App extends Component {
         report: report.data,
       })
     }
-    console.log('reports', reports);
     this.setState({
       report: reports
     });
@@ -99,29 +96,22 @@ class App extends Component {
     return (
       <div>
         <Menu></Menu>
-        <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-          <Tab eventKey="profile" title="Por Consultor">
-            <Row style={{ margin: '2%' }}>
-              <Col sm={3}>
-                <DateRange
-                  ranges={[this.state.selectionRange]}
-                  onChange={this.handleSelect}
-                />
-              </Col>
-              <Col sm={9}>
-                <Users users={this.state.users} getReport={this.getReport} handleSelection={this.handleSelection} />
-              </Col>
-            </Row>
-            <Row style={{ margin: '2%' }}>
-              <Col sm={12} style={{ textAlign: 'center' }}>
-                <ViewData report={this.state.report}/>
-              </Col>
-            </Row>
-          </Tab>
-          <Tab eventKey="contact" title="Por Cliente" disabled>
-            <h1>Hola</h1>
-          </Tab>
-        </Tabs>
+        <Row style={{ margin: '2% 2% 0% 2%' }} className='d-flex justify-content-center'>
+          <Col sm={3} className='text-center'>
+            <DateRange
+              ranges={[this.state.selectionRange]}
+              onChange={this.handleSelect}
+            />
+          </Col>
+          <Col sm={9}>
+            <Users users={this.state.users} getReport={this.getReport} handleSelection={this.handleSelection} />
+          </Col>
+        </Row>
+        <Row style={{ margin: '0% 2% 2% 2%' }}>
+          <Col sm={12} style={{ textAlign: 'center' }}>
+            <ViewData report={this.state.report} />
+          </Col>
+        </Row>
       </div>
     );
   }

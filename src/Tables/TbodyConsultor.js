@@ -7,7 +7,7 @@ class TbodyConsultor extends Component {
   bodyTable = () => {
     let body = [];
     for (let i = 0; i < this.props.data.receitaLiquita.length; i++) {
-      const month = `${this.getMonth(this.props.data.receitaLiquita[i].mes)} de ${this.props.data.receitaLiquita[i].year}`;
+      const month = `${this.getMonth(this.props.data.receitaLiquita[i].month)} de ${this.props.data.receitaLiquita[i].year}`;
       let row = [];
       row.push(<td key={0}>{month}</td>);
       const content = [
@@ -16,7 +16,6 @@ class TbodyConsultor extends Component {
         this.props.data.comissao.length > 0 ? this.props.data.comissao[i].total : 0,
         this.props.data.lucro.length > 0 ? this.props.data.lucro[i].total : 0,
       ];
-      console.log(content);
       for (let j = 0; j < 4; j++) {
         row.push(<td key={j + 1}>{
           <NumberFormat value={content[j]} displayType={'text'} thousandSeparator={true} prefix={'R$ '} />

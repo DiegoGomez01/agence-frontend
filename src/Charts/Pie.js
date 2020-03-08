@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 class Pie extends Component {
     render() {
-        console.log(this.props.report);
         const data = [['consultor', 'Total Receita Liquida']];
         for(let i = 0; i < this.props.report.length; i++) {
             data.push([this.props.report[i].name, this.props.report[i].report.sumReceitaLiquida]);
@@ -13,6 +12,7 @@ class Pie extends Component {
             <div className="d-flex justify-content-center">
                 <Chart
                     height={'300px'}
+                    width={'70%'}
                     chartType="PieChart"
                     loader={<div>Loading Chart</div>}
                     data={data}

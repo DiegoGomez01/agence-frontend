@@ -9,14 +9,14 @@ class Users extends Component {
         return (
             <div>
                 <div className="d-flex justify-content-center">
-                    <Row>
-                        <Col xs={12} md={5}>
+                    <Row className='w-100'>
+                        <Col md={5}>
                             <CardSelect title='Seleccionar' users={this.props.users.allUsers} onClick={this.props.handleSelection} action='add' />
                         </Col>
-                        <Col xs={12} md={1}>
+                        <Col md={2} className='text-center'>
                             <img src="https://cdn.iconscout.com/icon/free/png-256/twoway-direction-left-riht-arrow-1-3204.png" width="50" height="50" alt=''/>
                         </Col>
-                        <Col xs={12} md={5}>
+                        <Col md={5}>
                             <CardSelect title='Seleccionados' users={this.props.users.userSelected} onClick={this.props.handleSelection} action='delete' />
                         </Col>
                     </Row>
