@@ -6,7 +6,7 @@ class CardSelect extends Component {
     render() {
         return (
             <div>
-                <Card>
+                <Card className='w-100'>
                     <Card.Content>
                         <Header size="small" textAlign="center">{this.props.title}</Header>
                     </Card.Content>

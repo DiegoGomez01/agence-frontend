@@ -19,6 +19,7 @@ class Tables extends Component {
                     </thead>
                         <Tbody
                             data={this.props.data}
+                            getstringmonth={this.props.getstringmonth}
                         />
                 </Table>
             </div>

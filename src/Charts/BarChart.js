@@ -2,51 +2,52 @@ import React, { Component } from 'react';
 import { Chart } from "react-google-charts";
 import PropTypes from 'prop-types';
 
-let data = [[]];
+let data;
 
 class BarChart extends Component {
 
     custoFixoMedio = 0;
 
     getData() {
-        data = [[]];
-        data[0].push('Month');
-        for(let i = 0; i < this.props.report.length; i++) {
-            data[0].push(this.props.report[i].name);
-            this.custoFixoMedio = this.props.report[i].report.custoFixo[0].brut_salario;
-            this.getReportUser(this.props.report[i].report.receitaLiquita, i);
-        }
-        this.custoFixoMedio /= this.props.report.length;
-        data[0].push('average');
-        this.concatAverage(this.props.report[0].report.receitaLiquita.length);
-        console.log(data);
-    }
+        data = [['Date']];
+        let start_date = new Date(this.props.selectionrange.startDate);
+        let end_date = new Date(this.props.selectionrange.endDate);
 
-    getReportUser(receitaLiquita, index) {
-        if(index === 0) {
-            for(let i = 0; i < receitaLiquita.length; i++) {
-                data.push([`${receitaLiquita[i].mes} de ${receitaLiquita[i].year}`, receitaLiquita[i].total]);
-            }
-        } else {
-            for(let i = 0; i < receitaLiquita.length; i++) {
-                data[i+1].push(receitaLiquita[i].total);
-            }
-        }
-    }
+        let iMonth = start_date.getMonth() + 1;
+        let eMonth = end_date.getMonth() + 1;
+        let iYear = start_date.getFullYear();
+        let eYear = end_date.getFullYear();;
 
-    concatAverage(lenReceitaLiquita) {
-        for(let i = 0; i < lenReceitaLiquita; i++) {
-            data[i+1].push(this.custoFixoMedio);
+        const reports = this.props.report;
+
+        const names = reports.map(e => e.name);
+
+        data[0] = data[0].concat(names);
+        data[0].push("Average");
+        while (iMonth <= eMonth && iYear <= eYear) {
+            const totalsDate = [`${this.props.getstringmonth(iMonth)} de ${iYear}`];
+            let custoFixo = 0;
+            for (const p of reports) {
+                // eslint-disable-next-line no-loop-func
+                const aux = p.report.receitaLiquita.filter(r => r.month === iMonth && r.year === iYear).reduce((accum, current) => accum + current.total, 0);
+                custoFixo += p.report.custoFixo[0].brut_salario;
+                totalsDate.push(aux);
+            }
+            totalsDate.push(custoFixo / reports.length);
+            data.push(totalsDate);
+            iMonth = (iMonth + 1) % 13;
+            iMonth = (iMonth === 0) ? iMonth + 1 : iMonth;
+            iYear = (iMonth === 1) ? iYear + 1 : iYear;
         }
     }
 
     render() {
         this.getData();
-        console.log(this.props.report);
         return (
             <div className="d-flex justify-content-center">
                 <Chart
                     height={'300px'}
+                    width={'400px'}
                     chartType="ComboChart"
                     loader={<div>Loading Chart</div>}
                     data={data}
@@ -55,7 +56,7 @@ class BarChart extends Component {
                         vAxis: { title: 'Receita Liquida' },
                         hAxis: { title: 'Month' },
                         seriesType: 'bars',
-                        series: { [data[0].length - 1]: { type: 'line' } },
+                        series: { [data[0].length - 2]: { type: 'line' } },
                         is3D: true,
                     }}
                     rootProps={{ 'data-testid': '1' }}

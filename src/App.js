@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Menu from './Menu/Menu';
-import { Tab, Tabs, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import { DateRange } from 'react-date-range';
 import Users from './Users/Users';
 import ViewData from './ViewData/index';
@@ -20,16 +20,17 @@ class App extends Component {
         userSelected: [],
         allUsers: [],
       },
-      report: []
+      report: [],
+      loading: false
     }
     this.handleSelect = this.handleSelect.bind(this);
     this.getReport = this.getReport.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
+    this.getStringMonth = this.getStringMonth.bind(this);
   }
 
   async componentDidMount() {
     const users = await User.getConsultors();
-    console.log(users);
     this.setState({
       users: {
         userSelected: [],
@@ -39,7 +40,6 @@ class App extends Component {
   }
 
   handleSelect(ranges) {
-    console.log(ranges);
     this.setState({
       selectionRange: {
         startDate: ranges.selection.startDate,
@@ -57,10 +57,10 @@ class App extends Component {
       this.state.users.userSelected.splice(stateValues, 1);
     }
     this.setState({
-        users: {
-          ...this.state.users,
-          userSelected: this.state.users.userSelected
-        }
+      users: {
+        ...this.state.users,
+        userSelected: this.state.users.userSelected
+      }
     });
   }
 
@@ -74,13 +74,16 @@ class App extends Component {
   }
 
   async getReport() {
-    let start_date =new Date(this.state.selectionRange.startDate);
+    this.setState({
+      loading: true
+    })
+    let start_date = new Date(this.state.selectionRange.startDate);
     start_date = `${start_date.getFullYear()}-${start_date.getMonth() + 1}-${start_date.getDay() + 1}`;
-    let end_date =new Date(this.state.selectionRange.endDate);
+    let end_date = new Date(this.state.selectionRange.endDate);
     end_date = `${end_date.getFullYear()}-${end_date.getMonth() + 1}-${end_date.getDay() + 1}`
 
     const reports = [];
-    for(var i = 0; i < this.state.users.userSelected.length; i++) {
+    for (var i = 0; i < this.state.users.userSelected.length; i++) {
       const user = this.state.users.userSelected[i];
       let report = await User.getReportConsultors(user.id, start_date, end_date);
       reports.push({
@@ -89,39 +92,63 @@ class App extends Component {
         report: report.data,
       })
     }
-    console.log('reports', reports);
     this.setState({
-      report: reports
+      report: reports,
+      loading: false
     });
+  }
+
+  getStringMonth(number) {
+    switch (number) {
+      case 1:
+        return 'Janeiro';
+      case 2:
+        return 'Fevereiro';
+      case 3:
+        return 'Março';
+      case 4:
+        return 'Abril';
+      case 5:
+        return 'Maio';
+      case 6:
+        return 'Junho';
+      case 7:
+        return 'Julho';
+      case 8:
+        return 'Agosto';
+      case 9:
+        return 'Setembro';
+      case 10:
+        return 'Outubro';
+      case 11:
+        return 'Novembro';
+      case 12:
+        return 'Dezembro';
+      default:
+        return '';
+    }
   }
 
   render() {
     return (
       <div>
         <Menu></Menu>
-        <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-          <Tab eventKey="profile" title="Por Consultor">
-            <Row style={{ margin: '2%' }}>
-              <Col sm={3}>
-                <DateRange
-                  ranges={[this.state.selectionRange]}
-                  onChange={this.handleSelect}
-                />
-              </Col>
-              <Col sm={9}>
-                <Users users={this.state.users} getReport={this.getReport} handleSelection={this.handleSelection} />
-              </Col>
-            </Row>
-            <Row style={{ margin: '2%' }}>
-              <Col sm={12} style={{ textAlign: 'center' }}>
-                <ViewData report={this.state.report}/>
-              </Col>
-            </Row>
-          </Tab>
-          <Tab eventKey="contact" title="Por Cliente" disabled>
-            <h1>Hola</h1>
-          </Tab>
-        </Tabs>
+        <Row style={{ margin: '2% 2% 0% 2%' }} className='d-flex justify-content-center'>
+          <Col sm={3} className='text-center'>
+            <DateRange
+              ranges={[this.state.selectionRange]}
+              onChange={this.handleSelect}
+            />
+          </Col>
+          <Col sm={9}>
+            <Users users={this.state.users} getReport={this.getReport} handleSelection={this.handleSelection} loading={this.state.loading}/>
+          </Col>
+        </Row>
+        <Row style={{ margin: '0% 2% 2% 2%' }}>
+          <Col sm={12} style={{ textAlign: 'center' }}>
+            <ViewData report={this.state.report} selectionrange={this.state.selectionRange} getstringmonth={this.getStringMonth}/>
+          </Col>
+        </Row>
       </div>
     );
   }

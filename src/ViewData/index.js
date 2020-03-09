@@ -15,8 +15,8 @@ const panes = [
             {props.report.map((report, index) => {
                 const item = (
                     <div key={index}>
-                        <p style={{textAlign: 'left'}}>{report.name}</p>
-                        <Table data={report.report} headers={columns} tbody={TbodyConsultor}/>
+                        <p style={{ textAlign: 'left' }}>{report.name}</p>
+                        <Table data={report.report} headers={columns} tbody={TbodyConsultor} getstringmonth={props.getstringmonth} />
                     </div>
                 );
                 return item;
@@ -32,13 +32,20 @@ const panes = [
                     <Pie report={props.report} />
                 </Col>
                 <Col sm={7}>
-                    <BarChart report={props.report} />
+                    <BarChart report={props.report} selectionrange={props.selectionrange} getstringmonth={props.getstringmonth} />
                 </Col>
             </Row>
         </Tab.Pane>,
     },
 ]
 
-const TabExamplePointing = (props) => <Tab menu={{ pointing: true }} panes={panes} report={props.report} />
+const TabExamplePointing = (props) => 
+    <Tab 
+        menu={{ pointing: true }} 
+        panes={panes} 
+        report={props.report} 
+        selectionrange={props.selectionrange} 
+        getstringmonth={props.getstringmonth} 
+    />
 
-export default TabExamplePointing
+export default TabExamplePointing;
