@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CardSelect from './CardSelect';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Spinner } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 class Users extends Component {
@@ -22,7 +22,9 @@ class Users extends Component {
                     </Row>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', width: '90%', margin: '2% 0%'}}>
-                    <Button variant="success" onClick={this.props.getReport}>Get Report</Button>
+                    <Button variant="success" onClick={this.props.getReport} style={{width: '100px'}}>
+                        {this.props.loading ? <Spinner animation="border" variant="light" size="sm"/>: 'Get Report'}
+                    </Button>
                 </div>
             </div>
         );

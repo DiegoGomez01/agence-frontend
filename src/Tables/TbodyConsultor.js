@@ -7,7 +7,7 @@ class TbodyConsultor extends Component {
   bodyTable = () => {
     let body = [];
     for (let i = 0; i < this.props.data.receitaLiquita.length; i++) {
-      const month = `${this.getMonth(this.props.data.receitaLiquita[i].month)} de ${this.props.data.receitaLiquita[i].year}`;
+      const month = `${this.props.getstringmonth(this.props.data.receitaLiquita[i].month)} de ${this.props.data.receitaLiquita[i].year}`;
       let row = [];
       row.push(<td key={0}>{month}</td>);
       const content = [
@@ -24,37 +24,6 @@ class TbodyConsultor extends Component {
       body.push(<tr key={i}>{row}</tr>)
     }
     return body
-  }
-
-  getMonth(number) {
-    switch (number) {
-      case 1:
-        return 'Janeiro';
-      case 2:
-        return 'Fevereiro';
-      case 3:
-        return 'Março';
-      case 4:
-        return 'Abril';
-      case 5:
-        return 'Maio';
-      case 6:
-        return 'Junho';
-      case 7:
-        return 'Julho';
-      case 8:
-        return 'Agosto';
-      case 9:
-        return 'Setembro';
-      case 10:
-        return 'Outubro';
-      case 11:
-        return 'Novembro';
-      case 12:
-        return 'Dezembro';
-      default:
-        return '';
-    }
   }
 
   render() {

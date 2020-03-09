@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Chart } from "react-google-charts";
 import PropTypes from 'prop-types';
 
-let data = [['Date']];
+let data;
 
 class BarChart extends Component {
 
     custoFixoMedio = 0;
 
     getData() {
+        data = [['Date']];
         let start_date = new Date(this.props.selectionrange.startDate);
         let end_date = new Date(this.props.selectionrange.endDate);
 
@@ -23,9 +24,8 @@ class BarChart extends Component {
 
         data[0] = data[0].concat(names);
         data[0].push("Average");
-
         while (iMonth <= eMonth && iYear <= eYear) {
-            const totalsDate = [`${iMonth} de ${iYear}`];
+            const totalsDate = [`${this.props.getstringmonth(iMonth)} de ${iYear}`];
             let custoFixo = 0;
             for (const p of reports) {
                 // eslint-disable-next-line no-loop-func
@@ -39,7 +39,6 @@ class BarChart extends Component {
             iMonth = (iMonth === 0) ? iMonth + 1 : iMonth;
             iYear = (iMonth === 1) ? iYear + 1 : iYear;
         }
-        return data;
     }
 
     render() {

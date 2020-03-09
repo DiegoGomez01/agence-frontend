@@ -20,11 +20,13 @@ class App extends Component {
         userSelected: [],
         allUsers: [],
       },
-      report: []
+      report: [],
+      loading: false
     }
     this.handleSelect = this.handleSelect.bind(this);
     this.getReport = this.getReport.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
+    this.getStringMonth = this.getStringMonth.bind(this);
   }
 
   async componentDidMount() {
@@ -72,6 +74,9 @@ class App extends Component {
   }
 
   async getReport() {
+    this.setState({
+      loading: true
+    })
     let start_date = new Date(this.state.selectionRange.startDate);
     start_date = `${start_date.getFullYear()}-${start_date.getMonth() + 1}-${start_date.getDay() + 1}`;
     let end_date = new Date(this.state.selectionRange.endDate);
@@ -88,8 +93,40 @@ class App extends Component {
       })
     }
     this.setState({
-      report: reports
+      report: reports,
+      loading: false
     });
+  }
+
+  getStringMonth(number) {
+    switch (number) {
+      case 1:
+        return 'Janeiro';
+      case 2:
+        return 'Fevereiro';
+      case 3:
+        return 'Março';
+      case 4:
+        return 'Abril';
+      case 5:
+        return 'Maio';
+      case 6:
+        return 'Junho';
+      case 7:
+        return 'Julho';
+      case 8:
+        return 'Agosto';
+      case 9:
+        return 'Setembro';
+      case 10:
+        return 'Outubro';
+      case 11:
+        return 'Novembro';
+      case 12:
+        return 'Dezembro';
+      default:
+        return '';
+    }
   }
 
   render() {
@@ -104,12 +141,12 @@ class App extends Component {
             />
           </Col>
           <Col sm={9}>
-            <Users users={this.state.users} getReport={this.getReport} handleSelection={this.handleSelection} />
+            <Users users={this.state.users} getReport={this.getReport} handleSelection={this.handleSelection} loading={this.state.loading}/>
           </Col>
         </Row>
         <Row style={{ margin: '0% 2% 2% 2%' }}>
           <Col sm={12} style={{ textAlign: 'center' }}>
-            <ViewData report={this.state.report} selectionrange={this.state.selectionRange}/>
+            <ViewData report={this.state.report} selectionrange={this.state.selectionRange} getstringmonth={this.getStringMonth}/>
           </Col>
         </Row>
       </div>

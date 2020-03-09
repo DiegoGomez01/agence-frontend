@@ -12,7 +12,7 @@ class Pie extends Component {
             <div className="d-flex justify-content-center">
                 <Chart
                     height={'300px'}
-                    width={'600px'}
+                    width={'400px'}
                     chartType="PieChart"
                     loader={<div>Loading Chart</div>}
                     data={data}
